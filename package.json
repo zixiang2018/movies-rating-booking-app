@@ -1,0 +1,24 @@
+{
+  "name": "movies-rating-booking-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zixiang2018/movies-rating-booking-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zixiang2018/movies-rating-booking-app/issues"
+  },
+  "homepage": "https://github.com/zixiang2018/movies-rating-booking-app#readme",
+  "dependencies": {
+    "chai-http": "^4.3.0",
+    "express": "^4.17.1",
+    "mocha": "^8.2.1"
+  }
+}
