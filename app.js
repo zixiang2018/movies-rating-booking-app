@@ -1,31 +1,50 @@
-const express = require("express")
-const app = express()
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
+const app = express();
+
+var corsOptions = {
+    origin: "http://localhost:8081"
+};
+
+app.use(cors(corsOptions));
+
+// parse requests of content-type - application/json
+app.use(bodyParser.json());
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// // simple route
 // app.get("/", (req, res) => {
-//     console.log("Responding to root route")
-//     res.send("This is my root!")
-// })
-
-// app.get("/users", (req, res) => {
-//     console.log("Responding to users route")
-//     var user1 = { firstName: "Adam", lastName: "Lee" }
-//     var user2 = { firstName: "Bob", lastName: "Tan" }
-//     res.json([user1, user2])
-// })
-
-// - Discovery - users of your website can view the top 10 movies of the year at a glance
-// [Endpoint] for top10 movies
+//     res.json({ message: "Welcome to movies-rating-booking application." });
+// });
 
 
-// - Research - users can compare movie metadata, such as ratings, actors, etc. in order to select
-// a film to screen
-// [Endpoint] for retrieving a movie
+// Connect to the database
+const db = require("./src/models");
+db.mongoose
+    .connect(db.url, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    .then(() => {
+        console.log("Connected to the database!");
+    })
+    .catch(err => {
+        console.log("Cannot connect to the database!", err);
+        process.exit();
+    });
 
-// - Booking - users are able to proceed to purchase tickets to the desired movie via a button (the
-// button’s implementation is not required, the button can redirect the user to or another 3rd
-// -party website)
+require("./src/routes/movie.routes.js")(app);
 
-//http://localhost:3000/
-app.listen(3000, () => {
-    console.log("Server is up and listening on port 3000")
-})
+
+// set port, listen for requests
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}.`);
+});
+
+
+
