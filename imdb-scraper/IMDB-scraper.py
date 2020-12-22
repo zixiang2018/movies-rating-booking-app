@@ -30,29 +30,28 @@ soup = BeautifulSoup(page.content, 'html.parser')
 result = soup.find("tbody", {"class":"lister-list"}).findAll('tr')
 count = 0
 for tag in result:
-    if(count <3):
-        title = tag.find("td",{"class":"titleColumn"}).a.text
-        movie_year = "" if tag.find("td",{"class":"titleColumn"}).span.text == None else tag.find("td",{"class":"titleColumn"}).span.text
-        rating = "Nil" if tag.find("td",{"class":"ratingColumn imdbRating"}).strong == None else tag.find("td",{"class":"ratingColumn imdbRating"}).strong['title']
-        thumbnail_url = tag.find("td",{"class":"posterColumn"}).img['src']
+    title = tag.find("td",{"class":"titleColumn"}).a.text
+    movie_year = "" if tag.find("td",{"class":"titleColumn"}).span == None else tag.find("td",{"class":"titleColumn"}).span.text
+    rating = "Nil" if tag.find("td",{"class":"ratingColumn imdbRating"}).strong == None else tag.find("td",{"class":"ratingColumn imdbRating"}).strong['title']
+    thumbnail_url = tag.find("td",{"class":"posterColumn"}).img['src']
 
-        movie_url = "https://www.imdb.com" + tag.find("td",{"class":"titleColumn"}).a['href']
-        # Scrape and get the actors of the current link
-        movie_page = requests.get(movie_url)
-        movie_soup = BeautifulSoup(movie_page.content, 'html.parser')
-        actors = [i.text for i in movie_soup.findAll("div",{"class":"credit_summary_item"})[2].findAll("a")]
-        actors = actors[0:len(actors)-1] # Remove the last index because it always is "See the full cast"
-        actor_urls = ["https://www.imdb.com" + i["href"] for i in movie_soup.findAll("div",{"class":"credit_summary_item"})[2].findAll("a")]
-        actors_list = []
-        for i in range(len(actors)):
-            actor = Actor(actors[i], actor_urls[i])
-            # Add into mongo
-            actor_db.insert_one(actor.__dict__)
-
-        # Create the movie object 
-        movie = Movie(title, movie_year, rating, thumbnail_url, movie_url, actors)
+    movie_url = "https://www.imdb.com" + tag.find("td",{"class":"titleColumn"}).a['href']
+    # Scrape and get the actors of the current link
+    movie_page = requests.get(movie_url)
+    movie_soup = BeautifulSoup(movie_page.content, 'html.parser')
+    actors = [i.text for i in movie_soup.findAll("div",{"class":"credit_summary_item"})[2].findAll("a")]
+    actors = actors[0:len(actors)-1] # Remove the last index because it always is "See the full cast"
+    actor_urls = ["https://www.imdb.com" + i["href"] for i in movie_soup.findAll("div",{"class":"credit_summary_item"})[2].findAll("a")]
+    actors_list = []
+    for i in range(len(actors)):
+        actor = Actor(actors[i], actor_urls[i])
         # Add into mongo
-        movie_db.insert_one(movie.__dict__)
+        actor_db.insert_one(actor.__dict__)
+
+    # Create the movie object 
+    movie = Movie(title, movie_year, rating, thumbnail_url, movie_url, actors)
+    # Add into mongo
+    movie_db.insert_one(movie.__dict__)
 
 
     
@@ -60,4 +59,8 @@ for tag in result:
     print(count)
 #     print(json.dumps(m.__dict__))
 #     print(json.dumps(actor.__dict__))
+
+print("Complete!")
     
+    
+
