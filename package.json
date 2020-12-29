@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "set NODE_ENV=test && nodemon --exec mocha"
+    "test": "set NODE_ENV=test && nodemon --exec mocha --timeout 10000s"
   },
   "repository": {
     "type": "git",
