@@ -23,7 +23,7 @@ exports.findOne = (req, res) => {
         .then(data => {
             console.log(title)
             console.log(data)
-            res.send(data);
+            res.status(200).send(data);
         })
         .catch(err => {
             res.status(500).send({
@@ -41,7 +41,7 @@ exports.findTopTen = (req, res) => {
     //     .then(data => {
     //         console.log(title)
     //         console.log(data)
-    //         res.send(data);
+    //         res.status(200).send(data);
     //     })
     //     .catch(err => {
     //         res.status(500).send({
