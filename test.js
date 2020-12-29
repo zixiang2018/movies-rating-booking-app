@@ -89,8 +89,37 @@ describe("GET /api/movies", () => {
             })
     })
 
+    it("It should return all movies", (done) => {
+        chai.request(app)
+            .get("/api/movies/testTitle1")
+            .end((err, res) => {
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.a('array')
+                var expected = {
+                    1: {
+                      actors: [ 'testActor1', 'testActor2', 'testActor3' ],
+                      title: 'testTitle1',
+                      rating: '1 based on 200,000 user ratings',
+                      thumbnail_url: 'https://www.google.com',
+                      id: '1'
+                    }
+                }
+                  let i = 1
+                  for (const [key, value] of Object.entries(res.body)){
+                    expect(value.actors).to.be.eql(expected[i].actors)
+                    expect(value.title).to.be.eql(expected[i].title)
+                    expect(value.rating).to.be.eql(expected[i].rating)
+                    expect(value.thumbnail_url).to.be.eql(expected[i++].thumbnail_url)
+                  }
+                
+                done()
+            })
+    })
+
     after( (done) => {
          Movie.remove({}).then(() => done())
       })
 })
+
+
 
