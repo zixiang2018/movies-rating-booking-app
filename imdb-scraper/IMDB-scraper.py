@@ -12,11 +12,12 @@ actor_db = client.movieAppData.actors
 movie_db = client.movieAppData.movies
 
 class Movie:
-    def __init__(self, title, year, rating, thumbnail_url, movie_url, actors):
+    def __init__(self, title, year, rating, num_of_ratings, thumbnail_url, movie_url, actors):
         self.title = title
         self.rating = rating
         self.thumbnail_url = thumbnail_url
         self.actors = actors
+        self.num_of_ratings = num_of_ratings
 class Actor:
     def __init__(self, name, url):
       self.name = name
@@ -32,7 +33,16 @@ count = 0
 for tag in result:
     title = tag.find("td",{"class":"titleColumn"}).a.text
     movie_year = "" if tag.find("td",{"class":"titleColumn"}).span == None else tag.find("td",{"class":"titleColumn"}).span.text
-    rating = "Nil" if tag.find("td",{"class":"ratingColumn imdbRating"}).strong == None else tag.find("td",{"class":"ratingColumn imdbRating"}).strong['title']
+    raw_rating = "Nil" if tag.find("td",{"class":"ratingColumn imdbRating"}).strong == None else tag.find("td",{"class":"ratingColumn imdbRating"}).strong['title']
+    num_of_ratings = 0
+    rating = 0
+    if raw_rating != "Nil":
+        split_rating = raw_rating.split(" ")
+        num_of_ratings = split_rating[3]
+        rating = split_rating[0]
+    print(rating)
+    print(type(rating))
+        
     thumbnail_url = tag.find("td",{"class":"posterColumn"}).img['src']
 
     movie_url = "https://www.imdb.com" + tag.find("td",{"class":"titleColumn"}).a['href']
@@ -49,10 +59,10 @@ for tag in result:
         actor_db.insert_one(actor.__dict__)
 
     # Create the movie object 
-    movie = Movie(title, movie_year, rating, thumbnail_url, movie_url, actors)
+    
+    movie = Movie(title, movie_year, float(rating),  int(num_of_ratings.replace(",","")), thumbnail_url, movie_url, actors)
     # Add into mongo
     movie_db.insert_one(movie.__dict__)
-
 
     
     count += 1
