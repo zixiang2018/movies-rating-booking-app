@@ -28,27 +28,27 @@ exports.findOne = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving tutorials."
+                    err.message || "Some error occurred while retrieving movies."
             });
         });
 };
 
 // Find top 10 movies
-exports.findTopTen = (req, res) => {
-    // const title = req.params.title;
-    // var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
-    // Movie.find(condition)
-    //     .then(data => {
-    //         console.log(title)
-    //         console.log(data)
-    //         res.status(200).send(data);
-    //     })
-    //     .catch(err => {
-    //         res.status(500).send({
-    //             message:
-    //                 err.message || "Some error occurred while retrieving tutorials."
-    //         });
-    //     });
+exports.findMoviesByYear = (req, res) => {
+    const movie_year = req.params.movie_year;
+    var condition = movie_year ? { $query: { movie_year : movie_year }} : {};
+    Movie.find(condition)
+        .then(data => {
+            // console.log(movie_year)
+            // console.log(data)
+            res.status(200).send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving movies."
+            });
+        });
 };
 
 // // Update a Movie by the id in the request

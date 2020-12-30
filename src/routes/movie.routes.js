@@ -16,7 +16,7 @@ module.exports = app => {
     router.get("/:title", movies.findOne);
 
     // Retrieve top ten movies currently
-    router.get("/getTopTen", movies.findTopTen)
+    router.get("/findMoviesByYear/:movie_year", movies.findMoviesByYear)
 
     // // Update a Tutorial with id
     // router.put("/:id", movies.update);

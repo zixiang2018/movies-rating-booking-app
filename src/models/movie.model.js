@@ -2,7 +2,9 @@ module.exports = mongoose => {
     var schema = mongoose.Schema(
         {
             title: String,
-            rating: String,
+            movie_year: String,
+            rating: Number,
+            num_of_ratings: Number,
             thumbnail_url: String,
             actors: Array
         },

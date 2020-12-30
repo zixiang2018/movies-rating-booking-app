@@ -12,8 +12,9 @@ actor_db = client.movieAppData.actors
 movie_db = client.movieAppData.movies
 
 class Movie:
-    def __init__(self, title, year, rating, num_of_ratings, thumbnail_url, movie_url, actors):
+    def __init__(self, title, movie_year, rating, num_of_ratings, thumbnail_url, movie_url, actors):
         self.title = title
+        self.movie_year = movie_year
         self.rating = rating
         self.thumbnail_url = thumbnail_url
         self.actors = actors
@@ -32,16 +33,16 @@ result = soup.find("tbody", {"class":"lister-list"}).findAll('tr')
 count = 0
 for tag in result:
     title = tag.find("td",{"class":"titleColumn"}).a.text
-    movie_year = "" if tag.find("td",{"class":"titleColumn"}).span == None else tag.find("td",{"class":"titleColumn"}).span.text
+    movie_year = "" if tag.find("td",{"class":"titleColumn"}).span == None else tag.find("td",{"class":"titleColumn"}).span.text.strip(")").strip("(")
     raw_rating = "Nil" if tag.find("td",{"class":"ratingColumn imdbRating"}).strong == None else tag.find("td",{"class":"ratingColumn imdbRating"}).strong['title']
     num_of_ratings = 0
     rating = 0
     if raw_rating != "Nil":
         split_rating = raw_rating.split(" ")
-        num_of_ratings = split_rating[3]
-        rating = split_rating[0]
-    print(rating)
-    print(type(rating))
+        num_of_ratings = int(split_rating[3].replace(",",""))
+        rating = float(split_rating[0])
+    print(movie_year)
+    # print(type(rating))
         
     thumbnail_url = tag.find("td",{"class":"posterColumn"}).img['src']
 
@@ -60,7 +61,7 @@ for tag in result:
 
     # Create the movie object 
     
-    movie = Movie(title, movie_year, float(rating),  int(num_of_ratings.replace(",","")), thumbnail_url, movie_url, actors)
+    movie = Movie(title, movie_year, rating,  num_of_ratings, thumbnail_url, movie_url, actors)
     # Add into mongo
     movie_db.insert_one(movie.__dict__)
 
