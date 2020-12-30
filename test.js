@@ -24,7 +24,9 @@ describe("Movies", () => {
         for(var i = 1; i <= 5; i++){
             movie = Movie.create({
                 title: "testTitle"+i.toString(),
-                rating: i.toString() + " based on 200,000 user ratings",
+                movie_year: "200"+i.toString(),
+                rating: parseInt(i),
+                num_of_ratings: 20000,
                 thumbnail_url: "https://www.google.com",
                 actors: ["testActor1","testActor2","testActor3"]
             })
@@ -46,35 +48,45 @@ describe("Movies", () => {
                         1: {
                         actors: [ 'testActor1', 'testActor2', 'testActor3' ],
                         title: 'testTitle1',
-                        rating: '1 based on 200,000 user ratings',
+                        movie_year: "2001",
+                        rating: 1,
+                        num_of_ratings: 20000,
                         thumbnail_url: 'https://www.google.com',
                         id: '1'
                         },
                         2: {
                         actors: [ 'testActor1', 'testActor2', 'testActor3' ],
                         title: 'testTitle2',
-                        rating: '2 based on 200,000 user ratings',
+                        movie_year: "2002",
+                        rating: 2,
+                        num_of_ratings: 20000,
                         thumbnail_url: 'https://www.google.com',
                         id: '2'
                         },
                         3: {
                         actors: [ 'testActor1', 'testActor2', 'testActor3' ],
                         title: 'testTitle3',
-                        rating: '3 based on 200,000 user ratings',
+                        movie_year: "2003",
+                        rating: 3,
+                        num_of_ratings: 20000,
                         thumbnail_url: 'https://www.google.com',
                         id: '3'
                         },
                         4: {
                         actors: [ 'testActor1', 'testActor2', 'testActor3' ],
                         title: 'testTitle4',
-                        rating: '4 based on 200,000 user ratings',
+                        movie_year: "2004",
+                        rating: 4,
+                        num_of_ratings: 20000,
                         thumbnail_url: 'https://www.google.com',
                         id: '4'
                         },
                         5: {
                         actors: [ 'testActor1', 'testActor2', 'testActor3' ],
                         title: 'testTitle5',
-                        rating: '5 based on 200,000 user ratings',
+                        movie_year: "2005",
+                        rating: 5,
+                        num_of_ratings: 20000,
                         thumbnail_url: 'https://www.google.com',
                         id: '5'
                         }
@@ -82,12 +94,12 @@ describe("Movies", () => {
                     let i = 1
                     for (const [key, value] of Object.entries(res.body)){
                         expect(value.actors).to.be.eql(expected[i].actors)
+                        expect(value.movie_year).to.be.eql(expected[i].movie_year)
                         expect(value.title).to.be.eql(expected[i].title)
                         expect(value.rating).to.be.eql(expected[i].rating)
+                        expect(value.num_of_ratings).to.be.eql(expected[i].num_of_ratings)
                         expect(value.thumbnail_url).to.be.eql(expected[i++].thumbnail_url)
-
                     }
-                    
                     done()
                 })
         })
@@ -108,16 +120,20 @@ describe("Movies", () => {
                         1: {
                         actors: [ 'testActor1', 'testActor2', 'testActor3' ],
                         title: 'testTitle1',
-                        rating: '1 based on 200,000 user ratings',
+                        movie_year: "2001",
+                        rating: 1,
+                        num_of_ratings: 20000,
                         thumbnail_url: 'https://www.google.com',
                         id: '1'
                         }
                     }
                     let i = 1
                     for (const [key, value] of Object.entries(res.body)){
-                        expect(value.actors).to.be.eql(expected[i].actors)
+                        expect(value.actors).to.be.eql(expected[i].actors)    
+                        expect(value.movie_year).to.be.eql(expected[i].movie_year)
                         expect(value.title).to.be.eql(expected[i].title)
                         expect(value.rating).to.be.eql(expected[i].rating)
+                        expect(value.num_of_ratings).to.be.eql(expected[i].num_of_ratings)
                         expect(value.thumbnail_url).to.be.eql(expected[i].thumbnail_url)
                     }
                     done()
@@ -125,6 +141,41 @@ describe("Movies", () => {
         })
    })
     
+
+   /*
+    * Test the GET /api/movies/findMoviesByYear/:movie_year route
+    */
+   describe("/GET findMoviesByYear",()=>{
+    it("It should return movies from the given input year", (done) => {
+        chai.request(app)
+            .get("/api/movies/findMoviesByYear/2003")
+            .end((err, res) => {
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.a('array')
+                var expected = {
+                    1: {
+                    actors: [ 'testActor1', 'testActor2', 'testActor3' ],
+                    title: 'testTitle3',
+                    movie_year: "2003",
+                    rating: 3,
+                    num_of_ratings: 20000,
+                    thumbnail_url: 'https://www.google.com',
+                    id: '3'
+                    }
+                }
+                let i = 1
+                for (const [key, value] of Object.entries(res.body)){
+                    expect(value.actors).to.be.eql(expected[i].actors)    
+                    expect(value.movie_year).to.be.eql(expected[i].movie_year)
+                    expect(value.title).to.be.eql(expected[i].title)
+                    expect(value.rating).to.be.eql(expected[i].rating)
+                    expect(value.num_of_ratings).to.be.eql(expected[i].num_of_ratings)
+                    expect(value.thumbnail_url).to.be.eql(expected[i].thumbnail_url)
+                }
+                done()
+            })
+    })
+})
 
     afterEach( (done) => {
          Movie.remove({}).then(() => done())
