@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Movie = props => (
@@ -42,8 +42,8 @@ export default class MovieList extends Component {
     render() {
         return (
             <div>
-                <h3>Movies</h3>
-                <table className="table table-striped" style={{ marginTop: 20 }}>
+                <h3>List of Movies</h3>
+                <table className="table" style={{ marginTop: 20 }}>
                     <thead>
                         <tr>
                             <th>Banner</th>

@@ -34,6 +34,7 @@ db.mongoose
     });
 
 require("./src/routes/movie.routes.js")(app);
+require("./src/routes/actor.routes.js")(app);
 
 
 // set port, listen for requests

@@ -31,6 +31,9 @@ soup = BeautifulSoup(page.content, 'html.parser')
 
 result = soup.find("tbody", {"class":"lister-list"}).findAll('tr')
 count = 0
+
+actor_list = {}
+
 for tag in result:
     title = tag.find("td",{"class":"titleColumn"}).a.text
     movie_year = "" if tag.find("td",{"class":"titleColumn"}).span == None else tag.find("td",{"class":"titleColumn"}).span.text.strip(")").strip("(")
@@ -55,9 +58,9 @@ for tag in result:
     actor_urls = ["https://www.imdb.com" + i["href"] for i in movie_soup.findAll("div",{"class":"credit_summary_item"})[2].findAll("a")]
     actors_list = []
     for i in range(len(actors)):
-        actor = Actor(actors[i], actor_urls[i])
-        # Add into mongo
-        actor_db.insert_one(actor.__dict__)
+        # actor = Actor(actors[i], actor_urls[i])
+        if (actors[i] not in actor_list):
+            actor_list[actors[i]] = actor_urls[i]
 
     # Create the movie object 
     
@@ -71,6 +74,10 @@ for tag in result:
 #     print(json.dumps(m.__dict__))
 #     print(json.dumps(actor.__dict__))
 
+for key in actor_list:
+    actor = Actor(key, actor_list[key])
+    # Add into mongo
+    actor_db.insert_one(actor.__dict__)
 print("Complete!")
     
     

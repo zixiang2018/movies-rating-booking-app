@@ -17,5 +17,6 @@ db.mongoose = mongoose;
 console.log(url)
 db.url = url;
 db.movies = require("./movie.model.js")(mongoose);
+db.actors = require("./actor.model.js")(mongoose)
 
 module.exports = db;
