@@ -6,22 +6,23 @@ let chaiHttp = require("chai-http")
 const { response } = require("express")
 
 
-const db = require("./src/models");
-const Movie = db.movies;
+const db = require("./src/models")
+const Movie = db.movies
+const Actor = db.actors
 
 // Assertion
 const expect = chai.expect
 chai.use(chaiHttp)
-chai.use(require('chai-json'));
+chai.use(require('chai-json'))
 
-let movie;
+let movie
 
 
 
 describe("Movies", () => {
 
     beforeEach ((done)=>{
-        for(var i = 1; i <= 5; i++){
+        for(var i = 1 ;i <= 5 ;i++){
             movie = Movie.create({
                 title: "testTitle"+i.toString(),
                 movie_year: "200"+i.toString(),
@@ -37,61 +38,56 @@ describe("Movies", () => {
     /*
     * Test the GET /api/movies/ route
     */
-   describe ("/GET movies",()=>{
+   describe ("/GET /api/movies/",()=>{
         it("It should return all movies", (done) => {
             chai.request(app)
                 .get("/api/movies")
                 .end((err, res) => {
-                    expect(res).to.have.status(200);
+                    expect(res).to.have.status(200)
                     expect(res.body).to.be.a('Object')
                     var expected = {
-                        1: {
+                        0: {
                         actors: [ 'testActor1', 'testActor2', 'testActor3' ],
                         title: 'testTitle1',
                         movie_year: "2001",
                         rating: 1,
                         num_of_ratings: 20000,
                         thumbnail_url: 'https://www.google.com',
-                        id: '1'
                         },
-                        2: {
+                        1: {
                         actors: [ 'testActor1', 'testActor2', 'testActor3' ],
                         title: 'testTitle2',
                         movie_year: "2002",
                         rating: 2,
                         num_of_ratings: 20000,
                         thumbnail_url: 'https://www.google.com',
-                        id: '2'
                         },
-                        3: {
+                        2: {
                         actors: [ 'testActor1', 'testActor2', 'testActor3' ],
                         title: 'testTitle3',
                         movie_year: "2003",
                         rating: 3,
                         num_of_ratings: 20000,
                         thumbnail_url: 'https://www.google.com',
-                        id: '3'
                         },
-                        4: {
+                        3: {
                         actors: [ 'testActor1', 'testActor2', 'testActor3' ],
                         title: 'testTitle4',
                         movie_year: "2004",
                         rating: 4,
                         num_of_ratings: 20000,
                         thumbnail_url: 'https://www.google.com',
-                        id: '4'
                         },
-                        5: {
+                        4: {
                         actors: [ 'testActor1', 'testActor2', 'testActor3' ],
                         title: 'testTitle5',
                         movie_year: "2005",
                         rating: 5,
                         num_of_ratings: 20000,
                         thumbnail_url: 'https://www.google.com',
-                        id: '5'
                         }
                     }
-                    let i = 1
+                    let i = 0
                     for (const [key, value] of Object.entries(res.body)){
                         expect(value.actors).to.be.eql(expected[i].actors)
                         expect(value.movie_year).to.be.eql(expected[i].movie_year)
@@ -109,25 +105,24 @@ describe("Movies", () => {
     /*
     * Test the GET /api/movies/:title route
     */
-   describe("/GET movie",()=>{
+   describe("/GET /api/movies/:title",()=>{
         it("It should return one movie", (done) => {
             chai.request(app)
                 .get("/api/movies/testTitle1")
                 .end((err, res) => {
-                    expect(res).to.have.status(200);
+                    expect(res).to.have.status(200)
                     expect(res.body).to.be.a('array')
                     var expected = {
-                        1: {
+                        0: {
                         actors: [ 'testActor1', 'testActor2', 'testActor3' ],
                         title: 'testTitle1',
                         movie_year: "2001",
                         rating: 1,
                         num_of_ratings: 20000,
-                        thumbnail_url: 'https://www.google.com',
-                        id: '1'
+                        thumbnail_url: 'https://www.google.com'
                         }
                     }
-                    let i = 1
+                    let i = 0
                     for (const [key, value] of Object.entries(res.body)){
                         expect(value.actors).to.be.eql(expected[i].actors)    
                         expect(value.movie_year).to.be.eql(expected[i].movie_year)
@@ -145,25 +140,25 @@ describe("Movies", () => {
    /*
     * Test the GET /api/movies/findMoviesByYear/:movie_year route
     */
-   describe("/GET findMoviesByYear",()=>{
+   describe("/GET /api/movies/findMoviesByYear/:movie_year",()=>{
     it("It should return movies from the given input year", (done) => {
         chai.request(app)
             .get("/api/movies/findMoviesByYear/2003")
             .end((err, res) => {
-                expect(res).to.have.status(200);
+                expect(res).to.have.status(200)
                 expect(res.body).to.be.a('array')
                 var expected = {
-                    1: {
+                    0: {
                     actors: [ 'testActor1', 'testActor2', 'testActor3' ],
                     title: 'testTitle3',
                     movie_year: "2003",
                     rating: 3,
                     num_of_ratings: 20000,
                     thumbnail_url: 'https://www.google.com',
-                    id: '3'
+                    id: '2'
                     }
                 }
-                let i = 1
+                let i = 0
                 for (const [key, value] of Object.entries(res.body)){
                     expect(value.actors).to.be.eql(expected[i].actors)    
                     expect(value.movie_year).to.be.eql(expected[i].movie_year)
@@ -184,3 +179,77 @@ describe("Movies", () => {
 
 
 
+describe("Actors", () => {
+
+    beforeEach ((done)=>{
+        for(var i = 1 ;i <= 3 ;i++){
+            actor = Actor.create({
+                name: "testActor" + i.toString(),
+                url: "testexampleurl.com/"+i.toString()
+            })
+        }
+        done()
+    })
+
+    /*
+    * Test the GET /GET /api/actors/ route
+    */
+    describe("/GET /api/actors",()=>{
+        it("Find all actors",(done)=>{
+            chai.request(app)
+                .get("/api/actors/")
+                .end((err,res) =>{
+                    expect(res).to.have.status(200)
+                    var expected = {
+                        0: {
+                            name: "testActor1",
+                            url: "testexampleurl.com/1",
+                        },
+                        1: {
+                            name: "testActor2",
+                            url: "testexampleurl.com/2",
+                        },
+                        2: {
+                            name: "testActor3",
+                            url: "testexampleurl.com/3",
+                        }
+                    }
+
+                    let i = 0
+                    for (const[key,value] of Object.entries(res.body)){
+                        expect(value.name).to.be.eql(expected[i].name)
+                        expect(value.url).to.be.eql(expected[i++].url)
+                    }
+                    done()
+                })
+        })
+    })
+ 
+    /*
+    * Test the GET /GET /api/actors/:name route
+    */
+    describe("/GET /api/actors/:name", (done)=>{
+        it("Find one actor",(done)=>{
+            chai.request(app)
+                .get("/api/actors/testActor1")
+                .end((err,res) => {
+                    var expected = {
+                        0: {
+                            "name": "testActor1",
+                            "url": "testexampleurl.com/1"
+                        }
+                    }
+                    let i = 0
+                    for(const[key,value] of Object.entries(res.body)){
+                        expect(value.name).to.be.eql(expected[i].name)
+                        expect(value.url).to.be.eql(expected[i].url)
+                    }
+                    done()
+                })
+        })
+    })
+
+    afterEach((done) => {
+         Actor.remove({}).then(() => done())
+    })
+})

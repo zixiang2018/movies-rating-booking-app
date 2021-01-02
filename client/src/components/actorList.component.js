@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import Actor from "./actor.component"
 
-const Actor = props => (
-    <tr>
-        <td><a href={props.actor.url}>{props.actor.name}</a></td>
-    </tr>
-)
 
 export default class ActorList extends Component{
     constructor(props){
@@ -14,8 +10,9 @@ export default class ActorList extends Component{
     }
 
     componentDidMount(){
-        axios.get('')
+        axios.get('http://localhost:5000/api/actors/')
         .then(response => {
+            var actors = response.data
             this.setState({actors: response.data});
         }).catch(function(error){
             console.log(error);
@@ -24,7 +21,12 @@ export default class ActorList extends Component{
 
     actorList(){
         return Object.keys(this.state.actors).map((k,i)=>{
-            return <Actor actor={this.state.actors[k]} key={i} />
+            return <tr>
+                    <td actor={this.state.actors[k]} key={i}>
+                        <Actor name={this.state.actors[k].name} 
+                        url={this.state.actors[k].url}/>
+                    </td>
+                </tr>
         });
     }
 
@@ -37,10 +39,10 @@ export default class ActorList extends Component{
                         <tr>
                             <th>Actor Names</th>
                         </tr>
-                        <tbody>
-                            {this.actorList()}
-                        </tbody>
                     </thead>
+                    <tbody>
+                            { this.actorList() }
+                        </tbody>
                 </table>
             </div>
         )

@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import ViewAllMovies from "./components/view-all-movies.component";
-import ViewAllActors from "./components/view-all-actors.component";
+import ViewAllMovies from "./components/movieList.component";
+import ViewAllActors from "./components/actorList.component";
 
 class App extends Component {
   render(){
@@ -16,7 +16,7 @@ class App extends Component {
             </nav>
 
             <Route path="/" exact component={ViewAllMovies} />
-            <Route path="/actors" exact component={ViewAllActors} />
+            <Route path="/actors"  component={ViewAllActors} />
         </div>
 
          
