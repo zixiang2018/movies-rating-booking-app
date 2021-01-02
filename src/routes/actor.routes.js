@@ -1,14 +1,14 @@
 module.exports = app => {
-    const actors = require("../controllers/actor.controller.js");
+    const actors = require("../controllers/actor.controller.js")
 
-    var router = require("express").Router();
+    var router = require("express").Router()
 
     // Retrieve all actors
-    router.get("/", actors.findAll);
+    router.get("/", actors.findAll)
 
     // Retrieve one actor
-    router.get("/:name", actors.findOne);
+    router.get("/:name", actors.findOne)
 
 
-    app.use('/api/actors', router);
-};
+    app.use('/api/actors', router)
+}
