@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import ViewAllMovies from "./components/movieList.component";
-import ViewAllActors from "./components/actorList.component";
+import ViewAllMovies from "./components/searchMoviePage.component";
+import ViewAllActors from "./components/searchActorPage.component";
 
 class App extends Component {
   render(){
