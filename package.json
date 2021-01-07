@@ -4,13 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "set NODE_ENV=test && nodemon --exec mocha --timeout 10000s",
-    "start": "node app",
-        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && run build"
-  },
-  "engines": {
-    "node": "14.15.1",
-    "npm": "6.14.8"
+    "test": "set NODE_ENV=test && nodemon --exec mocha --timeout 10000s"
   },
   "repository": {
     "type": "git",
