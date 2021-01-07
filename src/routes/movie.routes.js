@@ -7,10 +7,13 @@ module.exports = app => {
     router.get("/", movies.findAll)
 
     // Retrieve a single Movie with id
-    router.get("/:title", movies.findOne)
+    router.get("/getMovieByTitle/:title", movies.findOne)
 
-    // Retrieve top ten movies currently
+    // Retrieve movies by year currently
     router.get("/findMoviesByYear/:movie_year", movies.findMoviesByYear)
+
+    // Retrieve all unique years in movie db
+    router.get("/getYears", movies.getYears)
 
     app.use('/api/movies', router)
 }

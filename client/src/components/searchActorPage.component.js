@@ -31,7 +31,7 @@ const SearchActorPage = (props) => {
     useEffect(() => {fetchData()},[])
 
     return (
-           <>
+        <div className='my-3'>
             <h3>List of Actors</h3>
             <SearchBar placeholder="Search Actors" keyword={input} setKeyword={updateInput}/>   
             <table className="table table-striped" style={{ marginTop: 20}}>
@@ -44,7 +44,7 @@ const SearchActorPage = (props) => {
                         <ActorList actors={actorList}/>
                 </tbody>
             </table>
-        </>
+        </div>
         
     )
     

@@ -6,7 +6,7 @@ const Movie = db.movies
 exports.findAll = (req, res) => {
     Movie.find({}, function (err, movies) {
         var movieMap = {}
-
+        
         movies.forEach(function (movie) {
             movieMap[movie._id] = movie
         })
@@ -21,8 +21,8 @@ exports.findOne = (req, res) => {
     var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {}
     Movie.find(condition)
         .then(data => {
-            console.log(title)
-            console.log(data)
+            // console.log(title)
+            // console.log(data)
             res.status(200).send(data)
         })
         .catch(err => {
@@ -51,22 +51,18 @@ exports.findMoviesByYear = (req, res) => {
         })
 }
 
-// // Update a Movie by the id in the request
-// exports.update = (req, res) => {
+// Return all years of movies
+exports.getYears = (req, res) => {
+    Movie.find({}, function (err, movies) {
+        const movieYearSet = new Set()
+        movies.forEach(function (movie) {
+            movieYearSet.add(movie.movie_year)
+        })
 
-// }
 
-// // Delete a Movie with the specified id in the request
-// exports.delete = (req, res) => {
-
-// }
-
-// // Delete all Movies from the database.
-// exports.deleteAll = (req, res) => {
-
-// }
-
-// // Find all published Movies
-// exports.findAllPublished = (req, res) => {
-
-// }
+        res.send([...movieYearSet].sort((a,b) => {
+            return b-a
+        }))
+    })
+    
+}

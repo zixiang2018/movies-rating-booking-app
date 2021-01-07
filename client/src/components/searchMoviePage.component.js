@@ -20,12 +20,13 @@ const SearchMoviePage = (props) => {
             })
     }
 
+
     const updateInput = (input) =>{
         const filtered = Object.values(movieListDefault)
         .filter(movie =>{
             return movie.title.toLowerCase().includes(input.toLowerCase())
         })
-        console.log(filtered)
+        // console.log(filtered)
         setInput(input)
         setMovieList(filtered)
     }
@@ -33,9 +34,13 @@ const SearchMoviePage = (props) => {
     useEffect(() => {fetchData()},[])
 
     return (
-        <>
-            <h3>List of Movies</h3>
-            <SearchBar placeholder="Search Movies" keyword={input} setKeyword={updateInput}/>
+        <div className=' container-fluid my-3'>
+            <h3 class="h3">Search Movies</h3>
+            <div className="form-group row">
+                <SearchBar placeholder="E.g. 'Wonder Woman 1984'" keyword={input} setKeyword={updateInput}/>
+            </div>
+            
+                
             <table className="table" style={{ marginTop: 20 }}>
                 <thead>
                     <tr>
@@ -52,7 +57,7 @@ const SearchMoviePage = (props) => {
                     <MovieList movieList={movieList}/>
                 </tbody>
             </table>
-        </>
+        </div>
     )
     
 }

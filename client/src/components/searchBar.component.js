@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
+import React from 'react'
 
 const SearchBar = ({keyword, setKeyword, placeholder}) =>{
     
     return (
         <input 
-        className="form-control"
+        className="form-control col-sm-3"
         key=""
         value={keyword}
         placeholder={placeholder}
