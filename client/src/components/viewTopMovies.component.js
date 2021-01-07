@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
-import MovieList from "./movieList.component"
+import MovieTable from "./movieTable.component"
 
 
 const SearchMoviePage = (props) => {
@@ -92,22 +92,8 @@ const SearchMoviePage = (props) => {
             </div>
             
                 
-            <table className="table" style={{ marginTop: 20 }}>
-                <thead>
-                    <tr>
-                        <th>Banner</th>
-                        <th>Title</th>
-                        <th>Year</th>
-                        <th>Rating</th>
-                        <th>Number of Ratings</th>
-                        <th>Actors</th>
-                        <th>Make Booking</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <MovieList movieList={sortMoviesByRating(movieList)}/>
-                </tbody>
-            </table>
+            <MovieTable movieList={movieList}/>
+
         </div>
     )
     

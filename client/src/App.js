@@ -19,7 +19,7 @@ class App extends Component {
                   <span className="navbar-toggler-icon"></span>
               </button>
               <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                  <div class="navbar-nav">
+                  <div className="navbar-nav">
                       <Link to="/" className="navbar-brand">Movie Galore</Link>
                       <Link to="/actors" className="nav-item nav-link">Actors</Link>
                       <Link to="/viewTopMovies" className="nav-item nav-link">Top Movies By Year</Link>
