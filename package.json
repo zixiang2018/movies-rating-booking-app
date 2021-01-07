@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "set NODE_ENV=test && nodemon --exec mocha --timeout 10000s"
+    "test": "set NODE_ENV=test && nodemon --exec mocha --timeout 10000s",
+    "start": "node app.js",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "engine":{
     "node": "14.15.1",

@@ -1,8 +1,17 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const path = require('path')
 
 const app = express();
+
+// Serve static files from the React frontend app
+app.use(express.static(path.join(__dirname, 'client/build')))
+// Anything that doesn't match the above, send back index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'))
+})
+
 
 app.use(cors());
 
@@ -11,11 +20,6 @@ app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// // simple route
-// app.get("/", (req, res) => {
-//     res.json({ message: "Welcome to movies-rating-booking application." });
-// });
 
 
 // Connect to the database
