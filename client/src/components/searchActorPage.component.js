@@ -10,7 +10,7 @@ const SearchActorPage = (props) => {
     const [actorList, setActorList] = useState()
 
     const fetchData = async() =>{
-        return await axios.get('http://localhost:5000/api/actors/')
+        return await axios.get('/api/actors/')
             .then(res => {
                 setActorListDefault(res.data)
                 setActorList(res.data)

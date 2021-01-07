@@ -11,7 +11,7 @@ const SearchMoviePage = (props) => {
     const [movieList, setMovieList] = useState()
 
     const fetchData = async() =>{
-        return await axios.get('http://localhost:5000/api/movies/')
+        return await axios.get('/api/movies/')
             .then(res => {
                 setMovieListDefault(res.data)
                 setMovieList(res.data);

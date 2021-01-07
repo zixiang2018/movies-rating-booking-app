@@ -21,7 +21,7 @@ const SearchMoviePage = (props) => {
     }
 
     const fetchYearData = async() =>{
-        return await axios.get('http://localhost:5000/api/movies/getYears')
+        return await axios.get('/api/movies/getYears')
             .then(res => {
                 setYearList(res.data)
             })
