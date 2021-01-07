@@ -17,7 +17,7 @@ const Actor = ({name})=>{
     useEffect(() => {fetchData()},[])
 
     return (
-        <a href={url}> {name}</a>
+        <a  target="_blank" href={url}> {name}</a>
     )
     
 }

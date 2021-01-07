@@ -12,7 +12,7 @@ const SearchMoviePage = (props) => {
     const fetchData = async() =>{
         return await axios.get('http://localhost:5000/api/movies/')
             .then(res => {
-                setMovieListDefault(sortMoviesByRating(res.data))
+                setMovieListDefault(res.data)
                 setMovieList(res.data);
             })
             .catch((error)=>{
@@ -105,7 +105,7 @@ const SearchMoviePage = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <MovieList movieList={movieList}/>
+                    <MovieList movieList={sortMoviesByRating(movieList)}/>
                 </tbody>
             </table>
         </div>
