@@ -2,9 +2,13 @@
   "name": "movies-rating-booking-app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "set NODE_ENV=test && nodemon --exec mocha --timeout 10000s"
+  },
+  "engine":{
+    "node": "14.15.1",
+    "npm": "6.14.8"
   },
   "repository": {
     "type": "git",
