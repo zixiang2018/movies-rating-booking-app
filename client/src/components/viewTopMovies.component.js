@@ -9,8 +9,11 @@ const SearchMoviePage = (props) => {
     const [movieList, setMovieList] = useState()
     const [yearList, setYearList] = useState()
 
+    const baseURL = window.location.origin
+
+
     const fetchData = async() =>{
-        return await axios.get('http://localhost:5000/api/movies/')
+        return await axios.get(baseURL+"/api/movies/")
             .then(res => {
                 setMovieListDefault(res.data)
                 setMovieList(res.data);
@@ -21,7 +24,7 @@ const SearchMoviePage = (props) => {
     }
 
     const fetchYearData = async() =>{
-        return await axios.get('/api/movies/getYears')
+        return await axios.get(baseURL+'/api/movies/getYears')
             .then(res => {
                 setYearList(res.data)
             })

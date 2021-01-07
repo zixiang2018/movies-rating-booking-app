@@ -10,8 +10,10 @@ const SearchMoviePage = (props) => {
     const [movieListDefault, setMovieListDefault] = useState()
     const [movieList, setMovieList] = useState()
 
+    const baseURL = window.location.origin
+
     const fetchData = async() =>{
-        return await axios.get('/api/movies/')
+        return await axios.get(baseURL+'/api/movies/')
             .then(res => {
                 setMovieListDefault(res.data)
                 setMovieList(res.data);

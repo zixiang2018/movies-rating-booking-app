@@ -4,9 +4,11 @@ import axios from 'axios'
 
 const Actor = ({name})=>{
     const [url, setUrl] = useState("")
+    const baseURL = window.location.origin
+
 
     const fetchData = async() =>{
-        return await axios.get('/api/actors/' + name)
+        return await axios.get(baseURL+'/api/actors/' + name)
             .then(res => {
                 setUrl(res.data[0].url)
             })

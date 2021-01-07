@@ -3,7 +3,13 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require('path')
 
+
 const app = express();
+
+require("./src/routes/movie.routes.js")(app);
+require("./src/routes/actor.routes.js")(app);
+
+
 
 // Serve static files from the React frontend app
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -41,8 +47,7 @@ db.mongoose
         process.exit();
     });
 
-require("./src/routes/movie.routes.js")(app);
-require("./src/routes/actor.routes.js")(app);
+
 
 
 // set port, listen for requests
